@@ -24,8 +24,8 @@ function App() {
   const [currentLanguage, setLanguage] = useState(() => {
     return localStorage.getItem("language") || "en";
   });
+
   const [loading, setLoading] = useState(false);
-  const [backgroundSoundEnabled, setBackgroundSoundEnabled] = useState(true);
   const [isFahrenheitMode, setIsFahrenheitMode] = useState(false);
   const degreeSymbol = useMemo(
     () => (isFahrenheitMode ? "\u00b0F" : "\u00b0C"),
