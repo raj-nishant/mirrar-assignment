@@ -5,9 +5,8 @@ import "./App.css";
 
 import DetailsCard from "./components/DetailsCard";
 import SummaryCard from "./components/SummaryCard";
-import Astronaut from "./assets/not-found.svg";
+import lost from "./assets/lost.svg";
 import SearchPlace from "./assets/search.svg";
-import BackgroundColor from "./components/BackgroundColor";
 
 import axios from "axios";
 
@@ -164,31 +163,10 @@ function App() {
 
   return (
     <div className="container">
-      <div
-        className="blur"
-        style={{
-          background: `${
-            weatherData ? BackgroundColor(weatherData) : "#a6ddf0"
-          }`,
-          top: "-10%",
-          right: "0",
-        }}
-      ></div>
-      <div
-        className="blur"
-        style={{
-          background: `${
-            weatherData ? BackgroundColor(weatherData) : "#a6ddf0"
-          }`,
-          top: "36%",
-          left: "-6rem",
-        }}
-      ></div>
-
+      <div className="blurry"></div>
       <div className="content">
         <div className="form-container">
           <div className="name">
-            {/* <Animation /> */}
             <div className="toggle-container">
               <input
                 type="checkbox"
@@ -202,9 +180,6 @@ function App() {
                 <TbSun style={{ color: "#f5c32c" }} />
                 <div className="ball" />
               </label>
-            </div>
-            <div className="city">
-              <TbMapSearch />
             </div>
           </div>
 
@@ -269,10 +244,7 @@ function App() {
                 <div className="nodata">
                   {noData === "Location Not Found" ? (
                     <>
-                      <img
-                        src={Astronaut}
-                        alt="an astronaut lost in the space"
-                      />
+                      <img src={lost} alt="lost" />
                       <p style={{ color: "red" }}>
                         Please enter correct city name
                       </p>

@@ -15,8 +15,8 @@
   --video: #ef5757;
   --location: #be58b7;
   --schedule: #e1ae4a;
-  --bgColor1: #efefef;
-  --bgColor2: #e0dddd;
+  --bgColor1: #74ebd5;
+  --bgColor2: #acb6e5;
   --blurBg: #a6ddf0;
   --textColor: #000;
   --subHeadingColor: darkgray;
@@ -25,9 +25,9 @@
 }
 
 .dark {
-  --bgColor1: #262424;
-  --bgColor2: #191616;
-  --blurBg: #296579;
+  --bgColor1: black;
+  --bgColor2: grey;
+  --blurBg: #020303;
   --cardColor: rgba(124, 124, 137, 0.64);
   --textColor: #fff;
   --subHeadingColor: rgb(17, 17, 17);
@@ -185,19 +185,18 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(106.23deg, #a4b7b1, #095f62 100%);
-  border-radius: 5px;
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-  padding: 8px;
-  color: var(--textColor);
-  transition: all 0.5s ease;
+  background: linear-gradient(135deg, #6398a6, #2e4a52 100%);
+  border-radius: 8px;
+  padding: 10px;
+  color: #fff;
+  transition: all 0.3s ease;
 }
+
 .s-icon:hover {
   cursor: pointer;
-  background: linear-gradient(106.23deg, #226fae, #226fae 100%);
-  transform: scale(1.05);
+  background: linear-gradient(135deg, #3b5998, #3b5998 100%);
 }
+
 .nodata {
   margin-top: 20px;
   color: darkgray;
