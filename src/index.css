@@ -6,12 +6,12 @@
   --black: #242d49;
   --profileShadow: 0px 4px 17px 2px rgba(0, 0, 0, 0.25);
   --hrColor: #cfcdcd;
-  --cardColor: #f2f5fc;
+  --cardColor: #f2f6f8;
   --buttonBg: linear-gradient(98.63deg, #4caefe 0%, #226fae 100%);
   --photo: #4cb256;
   --video: #ef5757;
-  --bgColor1: #74ebd5;
-  --bgColor2: #acb6e5;
+  --bgColor1: #fffbfb;
+  --bgColor2: #ffffff;
   --blurBg: #a6ddf0;
   --textColor: #000;
 }
