@@ -1,6 +1,6 @@
 import React from "react";
 
-function MoreInfoCard({ formattedData, degreeSymbol, main, clouds }) {
+function MoreInfo({ formattedData, degreeSymbol, main, clouds }) {
   return (
     <div className="more-info">
       <p className="">
@@ -34,4 +34,4 @@ function MoreInfoCard({ formattedData, degreeSymbol, main, clouds }) {
   );
 }
 
-export default MoreInfoCard;
+export default MoreInfo;

@@ -2,11 +2,11 @@ import React, { useMemo } from "react";
 import "../css/DetailsCard.css";
 import convertToFahrenheit from "../helper/convertToFahrenheit";
 import CloudsCard from "./CloudsCard";
-import MoreInfoCard from "./MoreInfoCard";
+import MoreInfo from "./MoreInfo";
 
 function DetailsCard({ weather_icon, data, isFahrenheitMode, degreeSymbol }) {
-  const { clouds, main, weather } = data.list[0];
-  console.log(data);
+  const { clouds, main, weather, city } = data.list[0];
+
   const formattedData = useMemo(() => {
     return {
       temp: Math.round(
@@ -36,7 +36,7 @@ function DetailsCard({ weather_icon, data, isFahrenheitMode, degreeSymbol }) {
         <CloudsCard
           data={{ formattedData, degreeSymbol, weather, weather_icon }}
         />
-        <MoreInfoCard
+        <MoreInfo
           formattedData={formattedData}
           degreeSymbol={degreeSymbol}
           main={main}
