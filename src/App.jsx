@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { RiCelsiusFill, RiFahrenheitFill } from "react-icons/ri";
 import { TbMapSearch, TbMoon, TbSearch, TbSun } from "react-icons/tb";
 import "./App.css";
@@ -8,17 +8,15 @@ import SummaryCard from "./components/SummaryCard";
 import lost from "./assets/lost.svg";
 import SearchPlace from "./assets/search.svg";
 
-import axios from "axios";
-
-function App() {
-  //Variable declarations
+const App = () => {
+  // Variable declarations
   const API_KEY = "88762fccb0c47213ba22b25e936e81af";
-  const [noData, setNoData] = useState();
+  const [noData, setNoData] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [weatherData, setWeatherData] = useState([]);
   const [city, setCity] = useState();
   const [weatherIcon, setWeatherIcon] = useState(
-    `https://openweathermap.org/img/wn/10n@2x.png`
+    "https://openweathermap.org/img/wn/10n@2x.png"
   );
   const [currentLanguage, setLanguage] = useState(() => {
     return localStorage.getItem("language") || "en";
@@ -33,30 +31,27 @@ function App() {
   const [active, setActive] = useState(false);
   const [isDark, setIsDark] = useState(false);
 
-  // code logic
+  // Code logic
   useEffect(() => {
-    if (isDark) {
-      document.body.classList.add("dark");
-    } else {
-      document.body.classList.remove("dark");
-    }
+    document.body.classList.toggle("dark", isDark);
   }, [isDark]);
 
-  //setting theme according to device
+  // Set theme based on device preference
   useEffect(() => {
-    if (
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-    ) {
-      setIsDark(true);
-    }
+    const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
-    window
-      .matchMedia("(prefers-color-scheme: dark)")
-      .addEventListener("change", (event) => {
-        setIsDark(event.matches);
-      });
-  }, [setIsDark]);
+    setIsDark(darkModeQuery.matches);
+
+    const handleDarkModeChange = (event) => {
+      setIsDark(event.matches);
+    };
+
+    darkModeQuery.addEventListener("change", handleDarkModeChange);
+
+    return () => {
+      darkModeQuery.removeEventListener("change", handleDarkModeChange);
+    };
+  }, []);
 
   const toggleDark = () => {
     setIsDark((prev) => !prev);
@@ -67,7 +62,7 @@ function App() {
   };
 
   const toggleFahrenheit = () => {
-    setIsFahrenheitMode(!isFahrenheitMode);
+    setIsFahrenheitMode((prev) => !prev);
   };
 
   const submitHandler = (e) => {
@@ -78,38 +73,33 @@ function App() {
   const getWeather = async (location) => {
     setLoading(true);
     setWeatherData([]);
-    let how_to_search =
+    const query =
       typeof location === "string"
         ? `q=${location}`
         : `lat=${location[0]}&lon=${location[1]}`;
 
-    const url = "https://api.openweathermap.org/data/2.5/forecast?";
+    const url = `https://api.openweathermap.org/data/2.5/forecast?`;
+
     try {
-      let res = await fetch(
-        `${url}${how_to_search}&appid=${API_KEY}&units=metric&cnt=5&exclude=hourly,minutely`
+      const res = await fetch(
+        `${url}${query}&appid=${API_KEY}&units=metric&cnt=5&exclude=hourly,minutely`
       );
-      let data = await res.json();
+      const data = await res.json();
+
       if (data.cod !== "200") {
         setNoData("Location Not Found");
         setCity("Unknown Location");
-        setTimeout(() => {
-          setLoading(false);
-        }, 500);
-        return;
+      } else {
+        setWeatherData(data);
+        setCity(`${data.city.name}, ${data.city.country}`);
+        setWeatherIcon(
+          `https://openweathermap.org/img/wn/${data.list[0].weather[0]["icon"]}@4x.png`
+        );
       }
-      setWeatherData(data);
-      setTimeout(() => {
-        setLoading(false);
-      }, 500);
-      setCity(`${data.city.name}, ${data.city.country}`);
-      setWeatherIcon(
-        `${
-          "https://openweathermap.org/img/wn/" + data.list[0].weather[0]["icon"]
-        }@4x.png`
-      );
     } catch (error) {
-      setLoading(true);
-      console.log(error);
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -122,10 +112,16 @@ function App() {
     setSearchTerm(input);
   };
 
-  // load current location weather info on load
-  window.addEventListener("load", function () {
-    navigator.geolocation.getCurrentPosition(myIP);
-  });
+  // Load current location weather info on load
+  useEffect(() => {
+    window.addEventListener("load", () => {
+      navigator.geolocation.getCurrentPosition(myIP);
+    });
+
+    return () => {
+      window.removeEventListener("load", myIP);
+    };
+  }, []);
 
   return (
     <div className="container">
@@ -152,8 +148,11 @@ function App() {
           <div className="search">
             <h2
               style={{
-                marginRight: currentLanguage === "es" || "fr" ? "10px" : "0px",
-                color: `${isDark ? "#fff" : "#333"}`,
+                marginRight:
+                  currentLanguage === "es" || currentLanguage === "fr"
+                    ? "10px"
+                    : "0px",
+                color: isDark ? "#fff" : "#333",
               }}
             >
               Weather App by Nishant
@@ -161,9 +160,7 @@ function App() {
 
             <hr
               style={{
-                borderBottom: `${
-                  isDark ? "3px solid  #fff" : "3px solid #333"
-                }`,
+                borderBottom: isDark ? "3px solid  #fff" : "3px solid #333",
               }}
             />
 
@@ -179,7 +176,7 @@ function App() {
               <button className="s-icon">
                 <TbSearch
                   onClick={() => {
-                    navigator.geolocation.getCurrentPositon(myIP);
+                    navigator.geolocation.getCurrentPosition(myIP);
                   }}
                 />
               </button>
@@ -254,6 +251,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;
