@@ -42,7 +42,7 @@ function App() {
     }
   }, [isDark]);
 
-  //setting themee according to device
+  //setting theme according to device
   useEffect(() => {
     if (
       window.matchMedia &&
@@ -118,42 +118,8 @@ function App() {
     getWeather([latitude, longitude]);
   };
 
-  // For the autocomplete search box- Places List
-  const [countries, setCountries] = useState([]);
-  const [countryMatch, setCountryMatch] = useState([]);
-
-  useEffect(() => {
-    const loadCountries = async () => {
-      const response = await axios.get("https://restcountries.com/v3.1/all");
-      let arr = [];
-      response.data.forEach((element) => {
-        arr.push(element.name.official);
-      });
-      setCountries(arr);
-    };
-
-    loadCountries();
-  }, []);
-
-  // console.log(countries);
-
   const searchCountries = (input) => {
-    // const {value}=input.target;
     setSearchTerm(input);
-
-    if (!input) {
-      // created if-else loop for matching countries according to the input
-      setCountryMatch([]);
-    } else {
-      let matches = countries.filter((country) => {
-        // eslint-disable-next-line no-template-curly-in-string
-        const regex = new RegExp(`${input}`, "gi");
-        // console.log(regex)
-        return country.match(regex) || country.match(regex);
-      });
-      setCountryMatch(matches);
-    }
-    // console.log(countryMatch);
   };
 
   // load current location weather info on load
